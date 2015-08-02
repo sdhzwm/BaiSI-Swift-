@@ -11,8 +11,8 @@ import Alamofire
 import SVProgressHUD
 class WMWordController: UITableViewController {
     
-    var essceType:EssenceType!
-    var wordToips = [WMWordToip]()
+   private var essceType:EssenceType!
+   private var wordToips = [WMWordToip]()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,11 +28,13 @@ extension WMWordController{
     private func setUpTable(){
         
         let bottom = tabBarController?.tabBar.frame.height;
-        let top = titleViewH + textTopViewY
+        let top = titleViewH + textTopViewY + 20
         tableView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: bottom!, right: 0)
         tableView.scrollIndicatorInsets = self.tableView.contentInset
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.whiteColor()
+        tableView.rowHeight = 200
+        tableView.registerNib(UINib(nibName: "WMWordToipCell", bundle: nil), forCellReuseIdentifier: "WMWordToipCell")
     }
      // MARK: - 刷新控件
 }
@@ -40,7 +42,7 @@ extension WMWordController{
 // MARK: - 用来加载数据的
 extension WMWordController{
     
-    func setLoadNewData(){
+    private func setLoadNewData(){
     
         var parameters = [String:String]()
         
@@ -55,10 +57,11 @@ extension WMWordController{
                 if let date = data as? [String: AnyObject] {
                     
                     if let dateArr = date["list"] as? [[String:AnyObject]]{
-                        self.wordToips = WMWordToip.worfToipResults(dateArr)
-                        print(self.wordToips[0].name)
-                        self.tableView.reloadData()
                         
+                        self.wordToips = WMWordToip.worfToipResults(dateArr)
+                     
+                       
+                        self.tableView.reloadData()
 
                     }
                 }
@@ -72,17 +75,22 @@ extension WMWordController{
         }
 
     }
+    
 }
  // MARK: - Table view data source
 extension WMWordController{
- 
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return wordToips.count
+        return self.wordToips.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-               
+        let cell = tableView.dequeueReusableCellWithIdentifier("WMWordToipCell") as? WMWordToipCell
+        let wordToip = wordToips[indexPath.row]
+        
+        cell?.wordToip = wordToip
+        return cell!
     }
 
 }

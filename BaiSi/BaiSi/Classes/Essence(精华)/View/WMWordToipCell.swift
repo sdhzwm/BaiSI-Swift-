@@ -7,11 +7,10 @@
 //
 
 import UIKit
-
+import SDWebImage
 class WMWordToipCell: UITableViewCell {
 
-    var wordToip:WMWordToip!
-    /** 头像 */
+      /** 头像 */
     @IBOutlet weak var profileImageView: UIImageView!
     /** 昵称 */
     @IBOutlet weak var nameLabel: UILabel!
@@ -28,7 +27,17 @@ class WMWordToipCell: UITableViewCell {
     /**文本内容*/    
     @IBOutlet weak var text_Label: UILabel!
    
-    
+    var wordToip: WMWordToip? {
+        didSet {
+            if let wordToip = wordToip {
+                
+                nameLabel.text = wordToip.name
+                profileImageView.sd_setImageWithURL(NSURL(string: wordToip.profile_image))
+                createTimeLabel.text = wordToip.create_time
+                
+            }
+        }
+    }
     override func awakeFromNib() {
         
         super.awakeFromNib()
@@ -39,8 +48,15 @@ class WMWordToipCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         
+        
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        contentView.frame.origin.x += 10
+        contentView.frame.size.width -= 20
+        contentView.frame.size.height -= 1
     }
     
 }

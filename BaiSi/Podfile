@@ -2,10 +2,7 @@ platform :ios, '8.0'
  use_frameworks!
 
 pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :branch => 'swift-2.0'
-
 pod 'SDWebImage'
-pod 'SVProgressHUD'
-
 pod 'MJRefresh'
-
 pod 'Kingfisher',:git => 'https://github.com/onevcat/Kingfisher.git',:branch => 'swift-2.0'
+pod 'SVProgressHUD'

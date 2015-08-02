@@ -10,10 +10,10 @@ import UIKit
 
 
 class WMEssenceController: UIViewController {
-    var titleView = UIView()
-    var indicateView = UIView()
-    var selledBtn = UIButton()
-    var conterView = UIScrollView()
+   private var titleView = UIView()
+   private  var indicateView = UIView()
+   private var selledBtn = UIButton()
+   private var conterView = UIScrollView()
     override func viewDidLoad() {
         super.viewDidLoad()
         //设置导航条
@@ -175,12 +175,13 @@ extension WMEssenceController{
         self.selledBtn.enabled = true
         btn.enabled = false
         self.selledBtn = btn
-        UIView.animateWithDuration(0.25) { () -> Void in
-            self.indicateView.center.x = btn.center.x
-      
+        
+        self.indicateView.center.x = btn.center.x
         self.conterView.contentOffset.x = CGFloat(btn.tag) * self.conterView.frame.width
         self.scrollViewDidEndScrollingAnimation(self.conterView)
-         }  
+       
+       
+   
     }
 
 }
